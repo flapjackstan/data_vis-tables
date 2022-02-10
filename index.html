@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree Example</title>
+
+    <style>
+	
+        
+        
+    </style>
+
+</head>
+<body>
+
+    <h1>https://bost.ocks.org/mike/join/</h1>
+    <!-- load the d3.js library -->	
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+        
+    <script>
+
+        // example from here
+        // https://stackoverflow.com/questions/9481497/understanding-how-d3-js-binds-data-to-nodes
+        var data =  [
+          [11975,  5871, 8916, 2868],
+          [ 1951, 10048, 2060, 6171],
+          [ 8010, 16145, 8090, 8045],
+          [ 1013,   990,  940, 6907]
+        ];
+        
+        var rows = d3.select("body") // select the body tag of DOM
+            .append("table") // append a single element
+
+            .selectAll("tr") // within appended element, select all table row elements  
+                             // if there are already tr elements, the data-enter-append chain will update or delete them
+                             // if there are no tr elements, the data-enter-append chain will create them
+                             // the significance of the selectAll is to embed a system that we can use 
+                             // to create and tie DOM elements to data without manually iterating (for loops) and branching (conditionals)
+
+            .data(data) // for each item in data, check if tr.__data__ exists, 
+                        // if it does exist update it (uses sql like join) and pass data along
+
+            .enter() // enter those that dont, exit/delete if an item is not present
+            .append("tr") // write element to DOM
+            .text(function(d, i) { return i}); // include text in innerHTML
+
+        var td = rows.selectAll("td") // select all table data cells elements, will return empty list
+            .data(function(d) { return d; }).enter().append("td") // grabs items from data initially passed in rows (above) and runs it through the chain. We can update table if we wanted to here
+            .style("background-color", "yellow") // add some inline css attributes
+            .text(function(d,i) { return d; }); // include text in inner
+
+    </script>
+    
+</body>
+</html>
